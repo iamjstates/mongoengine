@@ -11,7 +11,10 @@ from django.core.exceptions import ImproperlyConfigured
 class FileDocument(Document):
     """A document used to store a single file in GridFS.
     """
-    file = FileField()
+    file = FileField(collection_name="documents")
+
+    #def __unicode__(self):
+        #return self.file.name
 
 
 class GridFSStorage(Storage):
@@ -104,9 +107,9 @@ class GridFSStorage(Storage):
 
         return name
 
-    def _save(self, name, content):
+    def _save(self, name, content, **kwargs):
         doc = self.document()
-        getattr(doc, self.field).put(content, filename=name)
+        getattr(doc, self.field).put(content, filename=name, **kwargs)
         doc.save()
 
         return name
