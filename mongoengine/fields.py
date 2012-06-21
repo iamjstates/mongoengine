@@ -1045,7 +1045,7 @@ class FileField(BaseField):
         if value.grid_id is not None:
             if not isinstance(value, self.proxy_class):
                 self.error('FileField only accepts GridFSProxy values')
-            if not isinstance(value.grid_id, ObjectId):
+            if not isinstance(value.grid_id, (ObjectId, uuid.UUID)):
                 self.error('Invalid GridFSProxy value')
 
 
